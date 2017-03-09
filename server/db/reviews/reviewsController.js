@@ -7,10 +7,13 @@ const controller = {
 	save: function(req, res, next) {
 		console.log('saving review ------------> ', req.body);
 		Review.create({
+			id_helper: req.body.id_helper,
+			id_learner: req.body.id_learner,
 			content: req.body.content,
 			knowledge: req.body.knowledge,
 			helpfulness: req.body.helpfulness,
 			overall: req.body.overall,
+			experience: req.body.experience,
 			id_collaborate: req.body.id_collaborate
 		})
 		.then(function(task) {
@@ -23,30 +26,27 @@ const controller = {
 		});
 	},
 
-	retrieveAllByUserName: function(req, res, next) {
-		User.findOne({
-			where: { name: req.body.name }
-		})
-		.then(function(user) {
-			Collaborate.findAll({
-				where: { id_helper: user.id },
-				attributes: { exclude: ['room_number', 'id_question', 'id_helper'] },
-				include: [{model: Reivew}, 
-						{model: User, 
-							as: 'Learner',
-							attributes: ['name']
-						}
-				]
-			})
-			.then(function(collaborates) {
-				res.send(collaborates);
-			})
-			.catch(function(err) {
-				res.status(404).send("This user does not have any review yet.");
-			});
+	retrieveAll: function(req, res, next) {
+		Review.findAll()
+		.then(function(reviews) {
+			res.json(reviews);
 		})
 		.catch(function(err) {
-			res.status(500).send("Having trouble retrieving reviews for this user.");
+			console.log('err in findAll reviews');
+		});
+	},
+
+	retrieveAllByUserId: function(req, res, next) {
+		console.log('retrieving reviews ------------> ', req.params);
+		Review.findAll({
+			where: {id_helper: req.params.id}
+		})
+		.then(function(reviews) {
+			console.log('reviews -----------> ', reviews);
+			res.json(reviews);
+		})
+		.catch(function(err) {
+			console.log('error in retrieveAllByUserId ----------> ', err.message);
 		});
 
 	}

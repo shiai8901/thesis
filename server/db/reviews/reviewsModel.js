@@ -6,6 +6,12 @@ const Claim = require('../claims/claimsModel.js');
 const Collaborate = require('../collaborate/collaborateModel.js');
 
 const Review = db.define('review', {
+	id_helper: {
+		type: Sequelize.INTEGER
+	},
+	id_learner: {
+		type: Sequelize.INTEGER
+	},
 	knowledge: {
 		type: Sequelize.INTEGER
 	},
@@ -17,12 +23,26 @@ const Review = db.define('review', {
 	},
 	content: {
 		type: Sequelize.TEXT
+	},
+	experience: {
+		type: Sequelize.INTEGER
 	}
 });
 
 // Review.belongsTo(Collaborate, {foreignKey: 'id_collaborate', as: 'Collaborate'});
 
 db.sync()
+// .then(function() {
+// 	Review.findAll({
+// 		where: {id_helper: 6}
+// 	})
+// 	.then(function(reviews) {
+// 		console.log('reviews -----------> ', reviews);
+// 	})
+// 	.catch(function(err) {
+// 		console.log(err.message);
+// 	})
+// })
 // .then(function() {
 // 	return Review.create({
 // 		knowledge: 5,
@@ -33,7 +53,7 @@ db.sync()
 // 	})
 // 	console.log("model has been made")
 // })
-// .catch(function(err) {
-// 	console.log("err in review model", err.message);
-// });
+.catch(function(err) {
+	console.log("err in review model", err.message);
+});
 module.exports = Review;

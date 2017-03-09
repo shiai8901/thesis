@@ -72,7 +72,7 @@ const controller = {
           'status':question.status,
           'deadline': '',
           'userId':question.userId,
-          // 'name': question.name,
+          'name': question.name,
           'createdAt': question.createdAt,
         }
       });
@@ -118,9 +118,8 @@ const controller = {
   },
 
   changeStatus: function(req, res, next) {
-    var old = Question.findById(req.body.id_question);
-    console.log('old question -----> ', old);
-    old.update({status: req.body.status})
+    console.log('question id ---------> ', req.body.id_question);
+    QuestionOneUser.update({status: req.body.status}, {where: {id: req.body.id_question}})
       .then(function() {
         res.status(200);
       })

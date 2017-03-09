@@ -95,20 +95,20 @@ export default class ReviewPage extends React.Component {
 	}
 
 	handleCloseQuestion() {
-		this.setState({closeQuestion: true});
+		// this.setState({closeQuestion: true});
 
-		// var context = this;
-		// axios.post('/close-question', 
-		// 	{
-		// 		status: 'closed',
-		// 		id_question: context.state.questionId
-		// 	})
-		// .then(function() {
-		// 	this.setState({closeQuestion: true});
-		// })
-		// .catch(function(err) {
-		// 	console.log('error in closing question.', err.message);
-		// });
+		var context = this;
+		axios.post('/close-question', 
+			{
+				status: 'closed',
+				id_question: context.state.questionId
+			})
+		.then(function() {
+			this.setState({closeQuestion: true});
+		})
+		.catch(function(err) {
+			console.log('error in closing question.', err.message);
+		});
 	}
 
 	render() {

@@ -3,6 +3,8 @@ import {Link, browserHistory} from 'react-router';
 import UserProfile from './UserProfile';
 import Skills from './Skills';
 import OpenQuestions from './OpenQuestions';
+import Reviews from './Reviews'
+import axios from 'axios'
 
 export default class RightColumn extends React.Component {
   
@@ -17,6 +19,28 @@ export default class RightColumn extends React.Component {
 
   componentWillMount() {
     console.log('RightColumnPublic component will mount');
+  }
+
+  componentDidMount() {
+    var context = this;
+    console.log(context.state.id);
+    axios.get('/review-getByUserId/' + context.state.id )
+      .then(function(response) {
+        console.log('all reviews for one user IN RightColumn ---------------> ', response.data);
+      
+        var content = [];
+
+        response.data.forEach(function(review) {
+          content.push(review.content);
+        });
+
+        context.setState({
+          content: content
+        })
+      })
+      .catch(function(err) {
+        console.log('error in get all reviews for user', err.message);
+      });
   }
 
   render() {
@@ -41,6 +65,7 @@ export default class RightColumn extends React.Component {
           dashboard={this.props.dashboard}
           userCurrent={this.props.userCurrent} 
           questions={this.props.questions} />
+        <Reviews content={this.state.content}/>
       </div>
     );
   }

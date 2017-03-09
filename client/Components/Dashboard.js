@@ -5,6 +5,8 @@ import RightColumn from './RightColumn';
 import RightColumnPublic from './RightColumnPublic';
 import Signup from './Auth/Signup';
 import { browserHistory } from 'react-router';
+import axios from 'axios'
+
 
 export default React.createClass({
 
@@ -26,6 +28,7 @@ export default React.createClass({
   componentDidMount() {
     if (this.props.userData.user.id !== undefined) {
       var userId = this.props.userData.user.id;
+      console.log(userId);
       console.log('userId:', this.props.userData);
 
       var data = {

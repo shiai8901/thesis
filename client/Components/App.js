@@ -21,11 +21,10 @@ export default class App extends React.Component {
       userPublicQuestions: {},
       questionsClaimed: {},
       currentUserQuestions: {},
-      allUsers: {},
+      allUsers: [],
       userPublicProfile: {},
       user: {}
     };
-
     this.getUserQuestions = this.getUserQuestions.bind(this);
     this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
   }

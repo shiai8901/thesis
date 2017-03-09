@@ -28,6 +28,6 @@ const Question = db.define('questions', {
 
 User.hasMany(Question);
 
-db.sync();
+// db.sync();
 
 module.exports = Question;

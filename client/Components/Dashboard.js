@@ -40,18 +40,6 @@ export default React.createClass({
     }
   },
 
-  // componentDidMount() {
-  //   var userId = this.props.userData.user.userId;
-  //   console.log('userId:', this.props.userData);
-
-  //   var data = {
-  //     userId: userId
-  //   };
-
-  //   this.props.getUserQuestions(data);
-  //   this.props.getUserClaimedQuestions(data);
-  // },
-
   publicOrPrivate: function() {
     if (this.props.params.userId !== undefined) { // if public (check React Route params)
       return (

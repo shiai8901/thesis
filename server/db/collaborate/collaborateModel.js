@@ -39,10 +39,10 @@ db.sync()
 //     });
 //     // res.status(200).send('Session successfully saved');
 // })
-// .catch(function(err) {
-//   console.log('Error saving collaborate', err.message);
-//   // res.sendStatus(500);
-// });
+.catch(function(err) {
+  console.log('Error saving collaborate', err.message);
+  // res.sendStatus(500);
+});
 
 module.exports = Collaborate;
 

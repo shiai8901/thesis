@@ -16,20 +16,6 @@ io.on('connection', function(socket) {
     userNum--;
   });
 
-  /** when client emits 'addroom' **/
-  // socket.on('addroom', function(username, room_name) {
-  //   // if the room_name all ready exists
-  //   if (rooms[room_name]) {
-  //     io.to(socket.id).emit('room-exists', 'The room name is taken, please try other names');
-  //   } else {
-  //     rooms[room_name] = {users:[], code:[]};
-  //     rooms[room_name].users.push(username);
-  //     console.log('rooms', rooms);
-  //     socket.join(room_name);
-  //     io.to(socket.id).emit('info', 'You have created a room ' + room_name);
-  //     // io.to(socket.id).emit('setup-editor', rooms[room_name].code);
-  //   }
-  // });
   /** when client emits 'join-room' */
   socket.on('join-room', function(username, room_name) {
     if (rooms[room_name]) {
@@ -48,7 +34,6 @@ io.on('connection', function(socket) {
       rooms[room_name].users.push(username);
       console.log('rooms', rooms);
       socket.join(room_name);
-      // socket.emit('info', 'There is no such room');
     }
   });
 
@@ -57,17 +42,23 @@ io.on('connection', function(socket) {
       var index = rooms[room_name].users.indexOf(username);
       rooms[room_name].users.splice(index, 1);
     } else {
-      delete rooms[room_name];
+      // delete rooms[room_name];
     }
     io.in(room_name).emit('info', 'the other user exit the room');
     socket.leave(room_name);
     io.to(socket.id).emit('info', 'You left the room');
     io.to(socket.id).emit('exit_room');
+    console.log('exit_room', rooms);
   });
 
   socket.on('editor-content-changes', function(room_name, val) {
+    console.log('room_name in server ------> ', room_name);
+    console.log('rooms ', rooms);
+    if (rooms[room_name]) {
+
       rooms[room_name].code.push(val);
       socket.broadcast.to(room_name).emit('editor-content-changes', val);
+    }
   });
 
   socket.on('clear-editor', function(room_name) {
@@ -75,7 +66,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('submit-val', function(room_name, val) {
-    console.log('run code in server, ', room_name, val);
+    console.log('run code in server, ', rooms, ": ", val);
     /************ Use vm2 to sandbox untrusted code ************/
     var sandbox = {
       _output: JSON.parse('[]'),
@@ -99,8 +90,13 @@ io.on('connection', function(socket) {
     }
     console.log('vm: ', sandbox._output);
     /****************************************/
-
-    io.in(room_name).emit('submit-val', sandbox._output);
+    if (room_name) {
+      console.log('emit to all');
+      io.in(room_name).emit('submit-val', sandbox._output);     
+    } else {
+      console.log('emit to self');
+      io.to(socket.id).emit('submit-val', sandbox._output);
+    }
   });
 
   /** for the video chat **/

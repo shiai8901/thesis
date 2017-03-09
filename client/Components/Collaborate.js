@@ -169,6 +169,7 @@ export default class Collaborate extends React.Component {
     this.setState({info: msg});
   }
   exitRoom() {
+    console.log('exit_room room_name', this.state.room_name);
     socket.emit('exit_room', this.state.username, this.state.room_name);
   }
   handleExitRoom() {

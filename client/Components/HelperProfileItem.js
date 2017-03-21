@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 export default React.createClass({
 
   constructProfileLink() {
-    // return 'profile/' + this.props.details.github_id;
     return 'profile/' + this.props.details.id;
   },
 
   render() {
+
     return (
       <div className="col-xs-6 col-sm-3 placeholder">
         <img src={this.props.details.profile_img} width="200px"/>
@@ -18,7 +18,6 @@ export default React.createClass({
         <p>Javascript (5)</p>
         <p>HTML (5)</p>
         <p>CSS (5)</p>
-        
       </div>
     );
   }

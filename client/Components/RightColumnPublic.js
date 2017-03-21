@@ -15,32 +15,33 @@ export default class RightColumn extends React.Component {
       showButton: true,
       userOnlyQuestions: {},
     };
+    console.log('props', props);
   }
 
   componentWillMount() {
-    console.log('RightColumnPublic component will mount');
+    console.log('RightColumnPublic component will mount', this.props.userCurrent);
   }
 
   componentDidMount() {
-    var context = this;
-    console.log(context.state.id);
-    axios.get('/review-getByUserId/' + context.state.id )
-      .then(function(response) {
-        console.log('all reviews for one user IN RightColumn ---------------> ', response.data);
+    // var context = this;
+    // console.log(context.state.id, 'props', this.props.userCurrent);
+    // axios.get('/review-getByUserId/' + context.state.id )
+    //   .then(function(response) {
+    //     console.log('all reviews for one user IN RightColumn ---------------> ', response.data);
       
-        var content = [];
+    //     var content = [];
 
-        response.data.forEach(function(review) {
-          content.push(review.content);
-        });
+    //     response.data.forEach(function(review) {
+    //       content.push(review.content);
+    //     });
 
-        context.setState({
-          content: content
-        })
-      })
-      .catch(function(err) {
-        console.log('error in get all reviews for user', err.message);
-      });
+    //     context.setState({
+    //       content: content
+    //     })
+    //   })
+    //   .catch(function(err) {
+    //     console.log('error in get all reviews for user', err.message);
+    //   });
   }
 
   render() {

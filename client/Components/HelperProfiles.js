@@ -3,12 +3,6 @@ import { Link } from 'react-router';
 import HelperProfileItem from './HelperProfileItem';
 
 export default React.createClass({
-  
-  // getInitialState: function() {
-  //   return {
-  //     allUsers: {key: {}},
-  //   }
-  // },
 
   renderProfile(key) {
     return (
@@ -19,7 +13,6 @@ export default React.createClass({
   },
 
   render() {
-    //{ Object.keys(this.props.allUsers).map(this.renderProfiles) }
     return (
       <div>
         <h2>Find Hackers</h2>

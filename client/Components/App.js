@@ -4,10 +4,6 @@ import axios from 'axios';
 import NavLink from './NavLink';
 import style from '../sass/App.scss';
 
-//redux experiment
-// import ContainerOne from '../containers/ContainerOne';
-// import ContainerTwo from '../containers/ContainerTwo';
-
 export default class App extends React.Component {
 
   constructor(props) {
@@ -30,7 +26,6 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    //we can't call 'this' within axios, so need to hold it in 'context'
     var context = this;
 
     //this will set the user if there is a current session but no user
@@ -62,9 +57,6 @@ export default class App extends React.Component {
     //Get all questions
     axios.get('/question')
     .then(function(response) {
-      // console.log('========== Success getting All Questions from DB');
-      //response.data object is in an array, so need to get element 0
-      // console.log('questions:', response);
       context.setState({questions: response.data});
     })
     .catch(function(err) {
@@ -74,8 +66,6 @@ export default class App extends React.Component {
     //Get all users
     axios.get('/users')
     .then(function(response) {
-      // console.log('========== Success getting All Users from DB');
-      //response.data object is in an array, so need to get element 0
       context.setState({allUsers: response.data});
     })
     .catch(function(err) {
@@ -83,7 +73,6 @@ export default class App extends React.Component {
       console.log(err);
     }); // -------- End of get all users
 
-    //get User's questions and claims if they already exist
     if (this.state.user.name) {
       var data = {
         userId: this.state.user.id
@@ -97,10 +86,8 @@ export default class App extends React.Component {
   getUserQuestions(data) {
     var context = this;
 
-    //do ajax call to get current user questions
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
-      // console.log('========== Success getting Current User\'s Questions data from DB');
       context.setState({currentUserQuestions: response.data});
     })
     .catch(function(err) {
@@ -111,11 +98,8 @@ export default class App extends React.Component {
 
   getUserClaimedQuestions(data) {
     var context = this;
-        //do ajax call to get claimed questions
     axios.get('/claim', { params: data })
     .then(function(response) {
-      // console.log('========== Success getting Current User\'s Claimed questions from DB', response);
-      //response.data object is in an array, so need to get element 0
       context.setState({questionsClaimed: response.data});
     })
     .catch(function(err) {
@@ -129,8 +113,6 @@ export default class App extends React.Component {
     
     axios.post('/question', questionData)
     .then(function(res) {
-      // console.log('========== Success writing question to database');
-
     })
     .catch(function(err) {
       if (err) {
@@ -141,14 +123,11 @@ export default class App extends React.Component {
 
   getUserPublicQuestions(userId) {
     var context = this;
-    //get user's questions
     var data = {
       userId: userId,
     };
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
-      // console.log('========== Success getting User\'s Public Profile Questions for', userId);
-      // console.log(response.data);
       context.setState({userPublicQuestions: response.data});
     })
     .catch(function(err) {
@@ -159,7 +138,6 @@ export default class App extends React.Component {
   claimQuestion(currentUserId, learnerId, questionId) {
     axios.post('/claim', {id_helper: currentUserId, id_learner: learnerId, id_question: questionId})
     .then(function(res) {
-      // console.log('========== Success writing claim to database');
     })
     .catch(function(err) {
       if (err) {
@@ -178,9 +156,6 @@ export default class App extends React.Component {
       id_question: questionId,
     })
     .then(function(res) {
-      // console.log('========== Success saving collaborate session');
-      // setState to include learnerId, helperId, questionId, roomNumber?
-      // redirect to collaborate?
     })
     .catch(function(err) {
       if (err) {
@@ -196,7 +171,6 @@ export default class App extends React.Component {
     };
     axios.get('/public-profile', { params: data })
     .then(function(response) {
-      // console.log('========== Success getting User Public Profile data from DB');
       context.setState({userPublicProfile: response.data});
     })
     .catch(function(err) {
@@ -204,6 +178,73 @@ export default class App extends React.Component {
         console.log('Error getting User Public Profile data from DB');
       }
     });
+  }
+
+
+  getUserReviews(userId) {
+    var context = this;
+    
+    axios.get('/review-getByUserId/' + userId )
+      .then(function(response) {
+        console.log('all reviews for one user ---------------> ', response.data);
+      
+        var content = [];
+
+        response.data.forEach(function(review) {
+          content.push(review.content);
+          console.log('review.content -------------> ',review.content);
+        });
+
+        context.setState({
+          reviews: content
+        });
+      })
+      .catch(function(err) {
+        console.log('error in get all reviews for user', err.message);
+      });
+  }
+
+  getUserRatings(userId) {
+    var context = this;
+    var data = {
+      userId: userId
+    };
+    axios.get('/review-getByUserId/' + userId)
+      .then(function(response) {
+        console.log('all ratings for one user ---------------> ', response.data);
+        var overallTotal = 0;
+        var helpfulnessTotal = 0;
+        var experienceTotal = 0;
+        var knowledgeTotal = 0;
+        
+        var count = 0;
+
+        response.data.forEach(function(review) {
+          count += 1;
+          overallTotal += review.overall;
+          helpfulnessTotal += review.helpfulness;
+          knowledgeTotal += review.knowledge;
+          experienceTotal += review.experiment;
+        });
+
+        var averageOverall = Math.floor(overallTotal / count);
+        var averageKnowledge = Math.floor(knowledgeTotal / count);
+        var averageHelpfulness = Math.floor(helpfulnessTotal / count);
+        var averageExperience = Math.floor(experienceTotal / count);
+
+        var ratings = {
+          averageOverall: averageOverall,
+          averageKnowledge: averageKnowledge,
+          averageExperience: averageExperience,
+          averageHelpfulness: averageHelpfulness
+        }
+        context.setState({
+          ratings: ratings
+        })
+      })
+      .catch(function(err) {
+        console.log('error in get all reviews for user', err.message);
+      });
   }
 
   removeUser() {
@@ -224,6 +265,10 @@ export default class App extends React.Component {
         acceptHelper: this.acceptHelper.bind(this),
         getUserPublicProfile: this.getUserPublicProfile.bind(this),
         getUserPublicQuestions: this.getUserPublicQuestions.bind(this),
+
+        getUserReviews: this.getUserReviews.bind(this),
+        getUserRatings: this.getUserRatings.bind(this),
+
         removeUser: this.removeUser.bind(this)
       })
     );
@@ -246,6 +291,7 @@ export default class App extends React.Component {
             
           </div>
         </div>
+
       </div>
     );
   }

@@ -6,7 +6,6 @@ var PostQuestion = React.createClass({
 
   processQuestion: function() {
      event.preventDefault();
-     // console.log('form submit');
 
      //1. take data from form
      var questionData = {
@@ -18,8 +17,6 @@ var PostQuestion = React.createClass({
      }
 
      //2. add question back to App
-     // this.props.addQuestion(questionData);
-
     axios.post('/question', questionData)
     .then(function(res) {
       console.log('========== Success writing question to database');
@@ -36,15 +33,8 @@ var PostQuestion = React.createClass({
 
   },
 
-  // componentDidMount: function() {
-  //   console.log('inside DidMount', this.props);
-  // },
-
   render: function() {
-    // console.log('ShowForm is', this.props.showForm);
-    // console.log('hideQuestionForm', this.props.hideQuestionForm);
-    // console.log('Check userCurrent ID', this.props.userCurrent.id);
-    
+   
     if (this.props.showForm === true) {
       return (
         

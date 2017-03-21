@@ -1,0 +1,8 @@
+node_modules/
+
+/public/bundle.js
+/public/bundle.js.gz
+
+*.log
+
+.DS_store

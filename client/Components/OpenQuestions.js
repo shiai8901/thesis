@@ -3,13 +3,7 @@ import QuestionItem from './QuestionItem';
 
 var OpenQuestions = React.createClass({
 
-  componentWillMount: function(key) {
-    // console.log('in OpenQuestions, Authenticated?', this.props.authenticated);  
-  },
-
   renderQuestion: function(key) {
-    // console.log('OpenQuestions', this.props.questions);
-    // console.log('OpenQuestions', this.props.userCurrent.name);
     if (!this.props.questions) {
       return (
         <div>
@@ -27,11 +21,6 @@ var OpenQuestions = React.createClass({
           claimQuestion={this.props.claimQuestion}/> 
     );
   },
-  componentDidMount: function() {
-    // console.log('PROPS in OpenQuestions',this.props);
-    // console.log('Inside OpenQuestions', this.props.questions);
-    // console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
-  },
 
   checkIfInDashboard: function() {
     if (this.props.dashboard) {
@@ -43,15 +32,11 @@ var OpenQuestions = React.createClass({
 
   render: function() {
     return (
-      <div>
-        
+      <div>        
         { this.checkIfInDashboard() }
         <div>
-            { Object.keys(this.props.questions).map(this.renderQuestion) }
-          
+            { Object.keys(this.props.questions).map(this.renderQuestion) }          
         </div>
-
-
       </div>
     );
   }

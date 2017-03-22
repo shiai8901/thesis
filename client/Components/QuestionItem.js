@@ -5,12 +5,7 @@ import ClaimQuestionButton from './ClaimQuestionButton';
 import style from '../sass/QuestionItem.scss';
 
 var QuestionItem = React.createClass({
-  //do conditional rendering
-  
-  componentDidMount: function() {
-    // console.log('inside QuestionItem props', this.props);
-  },
-  
+ 
   isClaimed: function() {
     if (this.props.details.name) {
       return (<span>Asked by {this.props.details.name}</span>);
@@ -36,7 +31,6 @@ var QuestionItem = React.createClass({
     }
   },
 
-
   //if helper's children exist, then render the Helpers component
   render: function() {
     return (
@@ -51,9 +45,7 @@ var QuestionItem = React.createClass({
             <span>{this.isClaimed()} &nbsp; &nbsp; {this.isAuthenticated()}</span>
             <Helpers details={this.props.details}
                    acceptHelper={this.props.acceptHelper} />
-          </div>
-          
-          
+          </div>         
 
         </div>
 

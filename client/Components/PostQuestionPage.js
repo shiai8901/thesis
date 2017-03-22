@@ -4,24 +4,7 @@ import style from '../sass/PostQuestion.scss';
 var PostQuestion = React.createClass({
 
   processQuestion: function() {
-     // event.preventDefault();
-     // console.log('form submit');
-     // console.log(event);
-     // console.log('inside processQuestion function',this.refs);
-     //1. take data from form
-     // var questionData = {
-     //  questionTitle: this.refs.questionTitle.value,
-     //  questionBody: this.refs.questionBody.value
-     // }
-     // //2. add question back to App
-     // this.props.addQuestion(questionData);
-
-     // //3. reset the form
      this.refs.questionForm.reset();
-  },
-
-  componentDidMount: function() {
-    // console.log('inside DidMount', this.refs);
   },
 
   render: function() {

@@ -16,41 +16,41 @@ export default class LeftColumn extends React.Component {
   }
 
   componentDidMount() {
-    var context = this;
-    console.log(context.state.id);
-    axios.get('/review-getByUserId/' + context.state.id )
-      .then(function(response) {
-        console.log('all reviews for one user IN LeftColumn ---------------> ', response.data);
-        var overallTotal = 0;
-        var helpfulnessTotal = 0;
-        var experienceTotal = 0;
-        var knowledgeTotal = 0;
+    // var context = this;
+    // console.log(context.state.id);
+    // axios.get('/review-getByUserId/' + context.state.id )
+    //   .then(function(response) {
+    //     console.log('all reviews for one user IN LeftColumn ---------------> ', response.data);
+    //     var overallTotal = 0;
+    //     var helpfulnessTotal = 0;
+    //     var experienceTotal = 0;
+    //     var knowledgeTotal = 0;
         
-        var count = 0;
+    //     var count = 0;
 
-        response.data.forEach(function(review) {
-          count += 1;
-          overallTotal += review.overall;
-          helpfulnessTotal += review.helpfulness;
-          knowledgeTotal += review.knowledge;
-          experienceTotal += review.experiment;
-        });
+    //     response.data.forEach(function(review) {
+    //       count += 1;
+    //       overallTotal += review.overall;
+    //       helpfulnessTotal += review.helpfulness;
+    //       knowledgeTotal += review.knowledge;
+    //       experienceTotal += review.experiment;
+    //     });
 
-        var averageOverall = Math.floor(overallTotal / count);
-        var averageKnowledge = Math.floor(knowledgeTotal / count);
-        var averageHelpfulness = Math.floor(helpfulnessTotal / count);
-        var averageExperience = Math.floor(experienceTotal / count);
+    //     var averageOverall = Math.floor(overallTotal / count);
+    //     var averageKnowledge = Math.floor(knowledgeTotal / count);
+    //     var averageHelpfulness = Math.floor(helpfulnessTotal / count);
+    //     var averageExperience = Math.floor(experienceTotal / count);
 
-        context.setState({
-          averageOverall: Math.floor(overallTotal / count),
-          averageKnowledge: Math.floor(knowledgeTotal / count),
-          averageHelpfulness: Math.floor(helpfulnessTotal / count),
-          averageExperience: Math.floor(experienceTotal / count),
-        })
-      })
-      .catch(function(err) {
-        console.log('error in get all reviews for user', err.message);
-      });
+    //     context.setState({
+    //       averageOverall: Math.floor(overallTotal / count),
+    //       averageKnowledge: Math.floor(knowledgeTotal / count),
+    //       averageHelpfulness: Math.floor(helpfulnessTotal / count),
+    //       averageExperience: Math.floor(experienceTotal / count),
+    //     })
+    //   })
+    //   .catch(function(err) {
+    //     console.log('error in get all reviews for user', err.message);
+    //   });
   }
 
   render() {

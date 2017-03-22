@@ -3,17 +3,11 @@ import { Link } from 'react-router';
 import HelperAcceptButton from './HelperAcceptButton';
 
 var Helpers = React.createClass({
-  
-  componentDidMount: function() {
-    // console.log('In Helpers.s DidMount this.props', this.props);
-    // console.log('In Helpers.s DidMount this.props.details', this.props.details);
-  },
 
   renderHelpers: function(helperObject) {
     //for each object in the array
     //so checkHelpers needs to call this for every element in the array
-    // console.log('helperObject', helperObject);
-    
+
     var helperProfileLink = '/profile/' + helperObject.helperId;
 
     return ( 
@@ -30,10 +24,8 @@ var Helpers = React.createClass({
   //pass down all helpers here and map it
   checkHelpers: function() {
     //check if helper array of objects exists
-    if (this.props.details.helpers) {
-      
+    if (this.props.details.helpers) {     
       var helpersArray = this.props.details.helpers;
-      // console.log('helpersArray', helpersArray);
       return (
         <span>
           { helpersArray.map(this.renderHelpers) }

@@ -2,8 +2,6 @@ import React from 'react';
 
 export default class PostQuestionButton extends React.Component {
   render() {
-    // console.log('showButton is', this.props.showButton);
-    // console.log('showQuestionForm', this.props.showQuestionForm);
     if (this.props.showButton === true) {
       return (
         <div>

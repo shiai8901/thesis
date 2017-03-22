@@ -43,7 +43,7 @@ const controller = {
 		})
 		.then(function(reviews) {
 			console.log('reviews -----------> ', reviews);
-			res.json(reviews);
+			res.send(reviews);
 		})
 		.catch(function(err) {
 			console.log('error in retrieveAllByUserId ----------> ', err.message);
